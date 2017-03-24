@@ -1,0 +1,31 @@
+一种理解：
+
+A:client B:server
+3次握手：
+第一次握手：B知道A能发消息
+第二次握手：A知道自己发送的信息B能收到，并且A能发消息
+第三次握手：B知道自己发的消息A能收到
+4次挥手：
+第一次挥手：A发出挥手请求，B知道A不需要再发数据了
+第二次挥手：B告知A自己已收到A的挥手请求，A就可以不用再挥手了(同时A释放自己的资源？)
+第三次挥手：B发出挥手请求
+第四次挥手：B告知A自己已收到A的挥手请求，B就可以不用再挥手了(同时B释放自己的资源？)
+
+
+3次握手的另一种理解：
+在只有两次“握手”的情形下，假设Client想跟Server建立连接，但是却因为中途连接请求的数据报丢失了，故Client端不得不重新发送一遍；这个时候Server端仅收到一个连接请求，因此可以正常的建立连接。但是，有时候Client端重新发送请求不是因为数据报丢失了，而是有可能数据传输过程因为网络并发量很大在某结点被阻塞了，这种情形下Server端将先后收到2次请求，并持续等待两个Client请求向他发送数据...问题就在这里，Cient端实际上只有一次请求，而Server端却有2个响应，极端的情况可能由于Client端多次重新发送请求数据而导致Server端最后建立了N多个响应在等待，因而造成极大的资源浪费！所以，“三次握手”很有必要！
+
+一些网页：
+由socket的accept说开去
+http://ticktick.blog.51cto.com/823160/779866
+HTTP 代理原理及实现（一）
+https://imququ.com/post/web-proxy.html
+为什么“三次握手，四次挥手”？
+http://www.cnblogs.com/SeaSky0606/p/4741982.html?utm_source=tuicool&utm_medium=referral
+
+TCP的具体状态图
+http://blog.csdn.net/xifeijian/article/details/12777187
+一次完整的HTTP事务是怎样一个过程？
+http://blog.csdn.net/yipiankongbai/article/details/25029183
+HTTP协议详解
+http://www.cnblogs.com/li0803/archive/2008/11/03/1324746.html

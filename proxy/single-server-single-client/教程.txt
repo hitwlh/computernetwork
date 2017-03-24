@@ -1,0 +1,10 @@
+比较系统的教程：
+http://c.biancheng.net/cpp/socket/
+
+getaddrinfo()函数详解
+http://www.cnblogs.com/cxz2009/archive/2010/11/19/1881693.html
+
+为什么TCP服务端需要调用bind函数而客户端通常不需要呢？
+http://blog.csdn.net/stpeace/article/details/45001255
+对这个问题我自己的理解：
+
