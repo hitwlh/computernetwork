@@ -15,7 +15,7 @@ using namespace std;
 #include <math.h>
 #include <pthread.h>
 #define M 2
-#define continue_throw_ack_time 1<<M-1
+#define continue_throw_ack_time (1<<M)-1
 #define DEFAULT_PORT "27015"
 #define DEFAULT_DATASIZE 256
 #define DEFAULT_BUFLEN DEFAULT_DATASIZE+sizeof(int)//DEFAULT_DATASIZE是数据，4是包的编号（int大小），
@@ -72,8 +72,8 @@ int main(int argc, char **argv)
 		//cout << "hello world2\n";
 
 		if (ret - sizeof(int) == 0){
-			cout << "write " << write_f << "Bytes" << endl;
 			cout << "receive failed\n";
+			cout << "write " << write_f << "Bytes" << endl;
 			break;
 		}
 		throw_flag ++;
@@ -98,14 +98,15 @@ int main(int argc, char **argv)
 						cout << "send error" << endl;
 				}
 				else{
-					cout << "throw ack" << my_want << endl;
+					//cout << "throw ack" << my_want << endl;
 					throw_ack_time--;
 					if(throw_ack_time == 0)
 						throw_ack_time = continue_throw_ack_time;
+					cout << "throw ack" << my_want << ", throw_ack_time is: " << throw_ack_time << endl;
 				}
 			}
 			else{
-				printf("num is: %d);\n", num);
+				//printf("num is: %d);\n", num);
 				void *use = &my_want;
 				memcpy(sendbuf, (char *)use, sizeof(int));
 				if(throw_flag % 50 != 0 && throw_ack_time == continue_throw_ack_time){
@@ -116,10 +117,10 @@ int main(int argc, char **argv)
 						cout << "send error" << endl;
 				}
 				else{
-					cout << "throw ack" << my_want << endl;
 					throw_ack_time--;
 					if(throw_ack_time == 0)
 						throw_ack_time = continue_throw_ack_time;
+					cout << "throw ack" << my_want << ", throw_ack_time is: " << throw_ack_time << endl;
 				}
 			}
 			//cout << "hello world3\n";
@@ -138,6 +139,7 @@ int main(int argc, char **argv)
 			chaoshi++;
 		}
 	}
+	cout << "continue_throw_ack_time is: " << continue_throw_ack_time << endl;
 	close(ListenSocket);
 	fout.close();
 	return 0;
